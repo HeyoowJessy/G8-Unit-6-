@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TRASHsure Interactive ESL Lesson</title>
+<style>
+:root{--green:#16a34a;--darkgreen:#065f46;--yellow:#fef08a;--red:#ef4444;--blue:#0ea5e9;--orange:#f97316;--paper:#fffdf4;--dark:#1f2937}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Microsoft JhengHei",sans-serif;background:linear-gradient(135deg,#ecfdf5,#eff6ff,#fff7ed);color:var(--dark);overflow:hidden}
+button,input{font-family:inherit}.app{width:100vw;height:100vh;display:grid;grid-template-columns:225px 1fr}.sidebar{background:linear-gradient(180deg,#16a34a,#065f46);color:#fff;padding:16px 12px;overflow-y:auto;box-shadow:4px 0 18px rgba(0,0,0,.18);z-index:30}
+.logo{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);border-radius:20px;padding:12px;text-align:center;margin-bottom:14px}.logo h1{font-size:25px;margin:0}.logo p{margin:6px 0 0;font-size:13px}
+.navBtn{display:block;width:100%;margin:8px 0;padding:13px 8px;border:0;border-radius:15px;background:#fff;color:var(--darkgreen);font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.18)}.navBtn:hover,.navBtn.active{background:var(--yellow);transform:translateY(-2px)}
+.sideTools{margin-top:16px;padding:10px;background:rgba(255,255,255,.14);border-radius:16px}.sideTools h3{margin:0 0 8px;font-size:15px}.toolBtn{width:100%;margin:5px 0;padding:9px;border:0;border-radius:12px;background:#fff;color:var(--darkgreen);font-weight:900;cursor:pointer}
+.smallLabel{font-size:12px;font-weight:700;display:block;margin-top:8px}.colorRow{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}.colorBtn{width:30px;height:30px;border:2px solid #fff;border-radius:50%;cursor:pointer}
+.content{position:relative;overflow:hidden}.slide{display:none;height:100vh;padding:25px;overflow:auto;transform-origin:top left}.slide.active{display:block}.card{background:rgba(255,255,255,.94);border:4px solid #bbf7d0;border-radius:30px;padding:24px;box-shadow:0 12px 30px rgba(0,0,0,.12);margin-bottom:18px}
+.title{font-size:44px;color:var(--darkgreen);margin:0 0 10px;text-align:center}.subtitle{font-size:22px;color:#26735a;text-align:center;margin:0 0 18px}
+.instructionBox{background:#fff9dd;border:4px solid #ffd35a;border-radius:22px;padding:16px;font-size:22px;line-height:1.5;margin-bottom:14px}
+.bigBtn,.gameControls button{background:var(--yellow);cursor:pointer;border:3px solid #eab308;color:var(--darkgreen);border-radius:18px;padding:12px 18px;font-size:20px;font-weight:900;margin:6px;box-shadow:0 5px 0 #ca8a04}.gameControls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-bottom:14px}.gameControls input{padding:10px;border-radius:14px;border:2px solid #86efac;font-size:17px;font-weight:900}
+.quizArea{background:#fff;border:4px solid #bbf7d0;border-radius:24px;padding:20px;font-size:22px}.quizQ{font-size:31px;font-weight:900;color:var(--darkgreen);min-height:90px}.quizOptions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0}.quizOptions button{border:3px solid var(--green);background:#f8fffb;border-radius:18px;padding:15px;font-size:23px;font-weight:900;cursor:pointer}.feedback{font-size:27px;font-weight:900;min-height:38px;color:var(--green);text-align:center}.scoreNumber{font-size:32px;font-weight:900;color:var(--green);margin:0 8px}.scoreBtns button{border:3px solid var(--green);border-radius:14px;background:var(--yellow);font-size:22px;font-weight:900;padding:2px 12px;margin:2px;cursor:pointer}
+.dieBox{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;background:#fff9dd;border:3px solid #ffd35a;border-radius:16px;padding:6px 10px;margin:0}.die{font-size:44px;font-weight:900;color:var(--darkgreen);line-height:1}.dieRolling{animation:dieRollShake .12s linear infinite}@keyframes dieRollShake{0%{transform:rotate(0deg) scale(1)}25%{transform:rotate(12deg) scale(1.12)}50%{transform:rotate(-10deg) scale(.96)}75%{transform:rotate(8deg) scale(1.08)}100%{transform:rotate(0deg) scale(1)}}
+.balloonBoards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.balloonBoard{background:#fff;border:4px solid #bbf7d0;border-radius:24px;padding:12px;text-align:center}.balloonBoard h2{margin:0 0 8px;color:var(--darkgreen)}.balloonGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.balloon{border:0;background:transparent;font-size:34px;cursor:pointer;line-height:1;filter:drop-shadow(0 4px 2px rgba(0,0,0,.15));touch-action:manipulation}.balloon.popped{visibility:hidden}.balloonScore{font-size:22px;font-weight:900;color:var(--green);margin:8px 0}
+.vocabGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.vocabBox{background:var(--paper);border:4px solid #bbf7d0;border-radius:24px;padding:14px}.vocabBox h2{text-align:center;color:var(--darkgreen);font-size:29px;margin:0 0 12px}.wordGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.dragItem,.dropZone{background:#fff;border:3px solid var(--green);border-radius:18px;min-height:80px;padding:10px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:27px;font-weight:900;box-shadow:0 5px 0 #bbf7d0;cursor:pointer;user-select:none}.dragItem{color:#b45309;cursor:grab;touch-action:none}.dropZone{color:var(--darkgreen);border-style:dashed;background:#f8fffb;flex-direction:column;font-size:38px}.dropZone.correct{background:#dcfce7;border-color:#16a34a}.dropZone.wrong{background:#fee2e2;border-color:#ef4444}.answerSpot{font-size:30px;color:var(--green);min-height:35px}.hidden{display:none!important}
+.sdgIntro{background:#fff;border:4px solid #bae6fd;border-radius:24px;padding:18px;font-size:22px;line-height:1.4}.allSdgGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0}.miniSdg{border-radius:16px;padding:12px;min-height:76px;color:#fff;font-weight:900;text-align:center;display:flex;align-items:center;justify-content:center}.sdgGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}.sdgCard{background:#fff;border:4px solid #bbf7d0;border-radius:22px;padding:16px;min-height:110px;box-shadow:0 8px 18px rgba(0,0,0,.08);cursor:pointer;transition:.25s}.sdgCard h2{font-size:26px;color:var(--darkgreen);margin:0}.sdgArticle{display:none;font-size:24px;line-height:1.45;margin-top:14px;background:#fffdf4;border-radius:18px;padding:22px;border:4px solid #facc15;text-align:left}.sdgCard.open{grid-column:1/-1;max-width:1050px;width:100%;margin:0 auto;background:#ecfdf5;min-height:260px}.sdgCard.open .sdgArticle{display:block}
+.threeR{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.rCard{border-radius:22px;padding:18px;text-align:center;min-height:250px;border:4px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.1)}.rCard:nth-child(1){background:linear-gradient(135deg,#fef3c7,#fed7aa)}.rCard:nth-child(2){background:linear-gradient(135deg,#dbeafe,#bfdbfe)}.rCard:nth-child(3){background:linear-gradient(135deg,#dcfce7,#bbf7d0)}.rCard h2{font-size:34px;margin:0;color:#064e3b}.rCard li{font-size:20px;text-align:left}.lessonImg{width:100%;max-height:180px;object-fit:contain;border-radius:16px;border:3px solid #bbf7d0;background:#fff;margin:8px 0;padding:6px}
+.countryGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}.countryCard{background:#f8fffb;border:3px solid #86efac;border-radius:20px;padding:15px;font-size:20px;line-height:1.35;cursor:pointer;transition:.25s}.countryCard h2{margin:0;color:var(--darkgreen);font-size:28px}.countryArticle{display:none;margin-top:10px}.countryCard.open{grid-column:1/-1;max-width:950px;width:100%;margin:0 auto;background:#fffdf4;border:4px solid #facc15}.countryCard.open .countryArticle{display:block;font-size:23px;text-align:left}
+.huntBattle{display:grid;grid-template-columns:1fr 8px 1fr;gap:12px;align-items:stretch}.divider{background:linear-gradient(180deg,#16a34a,#facc15,#0ea5e9);border-radius:99px;min-height:620px}.battleSide{background:#fff;border:4px solid #bbf7d0;border-radius:26px;padding:14px;text-align:center}.battleSide h2{font-size:34px;margin:0;color:var(--darkgreen)}.targetBox{background:#fff9dd;border:4px solid #facc15;border-radius:18px;min-height:80px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:30px;font-weight:900;color:#b45309;margin:10px 0;padding:10px}.timerBubble,.scoreBubble{display:inline-block;background:var(--darkgreen);color:#fff;border-radius:999px;padding:8px 14px;font-size:24px;font-weight:900;margin:4px}.wordSearchGrid{background:linear-gradient(135deg,#dcfce7,#eff6ff);border:5px solid #fff;border-radius:24px;padding:14px;display:grid;grid-template-columns:repeat(12,1fr);gap:4px;min-height:460px}.letterCell{background:#fff;border:2px solid #86efac;border-radius:10px;min-height:38px;font-size:23px;font-weight:900;color:var(--darkgreen);cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;user-select:none}.letterCell.selected{background:#fef08a;border-color:#eab308;color:#854d0e}.letterCell.found{background:#bbf7d0;border-color:#16a34a;color:#065f46}.wordList{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}.wordChip{background:#fff;border:3px solid #86efac;border-radius:999px;padding:7px 12px;font-size:18px;font-weight:900;color:var(--darkgreen)}.wordChip.found{background:#dcfce7;text-decoration:line-through;color:#15803d}
+.wordwallBox{text-align:center;min-height:calc(100vh - 110px);display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(135deg,#dcfce7,#fff7ed);border-radius:32px;border:6px solid #fff}.wordwallBox h1{font-size:58px;color:var(--darkgreen);margin:0 0 10px}.wordwallBox p{font-size:25px;max-width:900px}.linkInput{width:min(800px,90%);padding:16px;border:4px solid #86efac;border-radius:18px;font-size:20px;margin:10px}
+.feedbackOverlay{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2000;font-size:120px;font-weight:900;pointer-events:none;animation:bigPop .75s ease forwards;text-shadow:0 8px 20px rgba(0,0,0,.25)}@keyframes bigPop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}35%{transform:translate(-50%,-50%) scale(1.25);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:0}}
+#drawCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:25;pointer-events:none;touch-action:none}body.markerOn #drawCanvas{pointer-events:auto}.floatingHint{position:absolute;right:16px;bottom:16px;background:rgba(6,95,70,.9);color:#fff;border-radius:18px;padding:10px 14px;z-index:40;font-weight:900;display:none}body.markerOn .floatingHint{display:block}
+
+.lessonSlide,.lessonSlide p,.lessonSlide li,.lessonSlide .sdgIntro,.lessonSlide .sdgArticle,.lessonSlide .countryArticle{font-size:45px!important}
+.lessonSlide .sdgCard h2,.lessonSlide .countryCard h2,.lessonSlide .rCard h2{font-size:45px!important}
+.lessonSlide .miniSdg{font-size:26px!important}
+.sdgImageRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}
+.sdgImageRow img{width:100%;max-height:260px;object-fit:contain;border:4px solid #bbf7d0;border-radius:18px;background:#fff;padding:6px}
+.floatingTargetBox{position:relative;overflow:hidden;min-height:86px;background:#fff9dd;border:4px solid #facc15;border-radius:18px;margin:10px 0;padding:10px}
+.floatingWord{position:absolute;left:-70%;top:50%;transform:translateY(-50%);font-size:34px;font-weight:900;color:#b45309;background:#fff;border:4px solid #facc15;border-radius:999px;padding:10px 24px;box-shadow:0 6px 14px rgba(0,0,0,.16);animation:floatWord 5s linear forwards;white-space:nowrap}
+@keyframes floatWord{0%{left:-70%}100%{left:110%}}
+
+
+.lessonSlide .sdgCard h2{font-size:38px!important}
+.lessonSlide .sdgArticle p{text-align:justify;margin:0 0 18px 0}
+.passedWords{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;min-height:42px;margin:6px 0 10px;padding:6px;border:3px dashed #facc15;border-radius:16px;background:#fffdf4}
+.passedChip{background:#fff;border:3px solid #16a34a;border-radius:999px;padding:6px 12px;font-size:18px;font-weight:900;color:#065f46}
+
+
+.foundCount{font-size:22px;font-weight:900;color:#065f46;margin:6px 0}
+.passedChip.foundWord{text-decoration:line-through;background:#dcfce7;color:#15803d;border-color:#16a34a}
+
+
+.countdownText{font-size:34px;font-weight:900;color:#b45309;text-align:center;padding:12px}
+
+
+.passedWords::before{content:"Words to find:";font-weight:900;color:#b45309;margin-right:8px;font-size:20px}
+.passedWords{position:sticky;top:0;z-index:5}
+
+
+.longWordAdjust{
+    font-size:28px !important;
+    line-height:1.2;
+}
+
+@media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{height:auto;display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;align-items:center}.logo,.sideTools{min-width:180px;margin-bottom:0}.navBtn{min-width:160px}.slide{height:calc(100vh - 155px)}.vocabGrid,.balloonBoards,.threeR{grid-template-columns:1fr}.huntBattle{grid-template-columns:1fr}.divider{min-height:8px}.wordSearchGrid{grid-template-columns:repeat(12,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="logo"><h1>TRASHsure</h1><p>Trash into Treasure</p></div>
+<button class="navBtn active" onclick="showSlide(0)">1. Cover Page</button>
+<button class="navBtn" onclick="showSlide(1)">2. Warm-up</button>
+<button class="navBtn" onclick="showSlide(2)">3. Vocabulary</button>
+<button class="navBtn" onclick="showSlide(3)">4. Lesson Content</button>
+<button class="navBtn" onclick="showSlide(4)">5. Activity</button>
+<button class="navBtn" onclick="showSlide(5)">6. Review Battle</button>
+<button class="navBtn" onclick="showSlide(6)">7. Wordwall Link</button>
+<div class="sideTools"><h3>Zoom Options</h3><button class="toolBtn" onclick="zoomIn()">Zoom +</button><button class="toolBtn" onclick="zoomOut()">Zoom -</button><button class="toolBtn" onclick="resetZoom()">Reset Zoom</button></div>
+<div class="sideTools"><h3>Marker</h3><button class="toolBtn" onclick="toggleMarker()">Marker On / Off</button><button class="toolBtn" onclick="clearMarker()">Clear Marker</button><label class="smallLabel">Marker Size</label><input type="range" min="2" max="24" value="6" id="markerSize" style="width:100%"><label class="smallLabel">Marker Color</label><div class="colorRow"><button class="colorBtn" style="background:#ff0000" onclick="setMarkerColor('#ff0000')"></button><button class="colorBtn" style="background:#0000ff" onclick="setMarkerColor('#0000ff')"></button><button class="colorBtn" style="background:#111" onclick="setMarkerColor('#111111')"></button><button class="colorBtn" style="background:#00a651" onclick="setMarkerColor('#00a651')"></button></div></div>
+</aside>
+<main class="content" id="content"><canvas id="drawCanvas"></canvas><div class="floatingHint">Marker is ON. Draw anywhere on the lesson screen.</div>
+
+<section class="slide active">
+<div class="card" style="height:calc(100vh - 70px);display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center">
+<div style="width:100%">
+<img src="cover.png" onerror="this.src='cover.jpg';this.onerror=null" style="max-width:95%;max-height:70vh;object-fit:contain;border-radius:24px">
+</div>
+<div>
+<h1 style="font-size:60px;color:#065f46;margin:0">2nd Semester - Unit 6</h1>
+<p style="font-size:34px;font-weight:900;color:#b45309">Prepared by: Jessy</p>
+</div>
+</div>
+</section>
+
+
+<section class="slide"><div class="card"><h1 class="title">2. Warm-up</h1><div class="instructionBox"><b>Instructions:</b><br>1. Click the video button and watch the video.<br>2. After watching, click <b>Questions</b> and answer with your classmates.</div><div style="text-align:center;background:#fffdf4;border:4px solid #facc15;border-radius:26px;padding:26px;margin:16px auto;max-width:900px"><h2 style="font-size:38px;color:#065f46;margin:0 0 12px">Saving the Ocean Video</h2><p style="font-size:24px;margin:0 0 14px">Click the button below to watch the warm-up video.</p><button class="bigBtn" onclick="openWarmupVideo()">▶ Watch YouTube Video</button><button class="bigBtn" onclick="toggleWarmupQuestions()">Questions</button><div id="warmupQuestions" class="hidden" style="margin-top:18px;text-align:left;background:#fff;border:4px solid #bbf7d0;border-radius:22px;padding:20px"><h2 style="font-size:34px;color:#065f46;margin:0 0 12px;text-align:center">Questions</h2><ol style="font-size:30px;line-height:1.6;font-weight:900;color:#1f2937"><li>What is the video all about?</li><li>What are the animals that you have seen in the video?</li><li>Why is it important to save the ocean?</li></ol></div></div></div></section>
+
+<section class="slide"><div class="card"><h1 class="title">3. Vocabulary</h1><p class="subtitle">Click <b>Chinese Words</b> to reveal the boxes. Drag each Chinese box to its English translation.</p><div class="vocabGrid"><div class="vocabBox"><h2 onclick="revealChineseWords()" style="cursor:pointer;background:#fef08a;border-radius:16px;padding:10px">Chinese Words 中文</h2><div class="wordGrid hidden" id="zhWords"></div></div><div class="vocabBox"><h2>English Words</h2><div class="wordGrid" id="enWords"></div></div></div><div style="text-align:center;margin-top:16px"><button class="bigBtn" onclick="resetVocabulary()">Reset Vocabulary</button></div></div></section>
+<section class="slide lessonSlide"><div class="card"><h1 class="title">4. Lesson Content</h1><div class="sdgIntro"><h2 style="margin:0;color:var(--darkgreen);font-size:34px">What is SDG?</h2><p><b>SDG</b> means <b>Sustainable Development Goal</b>. The United Nations made 17 global goals to help people, protect the planet, and make the world better by 2030.</p></div><h1 class="title" style="font-size:34px;margin-top:20px">The 17 SDGs</h1><div class="allSdgGrid" id="allSdgGrid"></div><h1 class="title" style="font-size:36px;margin-top:20px;cursor:pointer;background:#fef08a;border-radius:18px;padding:12px" onclick="toggleThreeRs()">The 3Rs</h1><div class="threeR hidden" id="threeRBox"><div class="rCard"><h2>Reduce</h2><img class="lessonImg" src="3Rs.png" onerror="this.src='3Rs.jpg';this.onerror=null" alt="Reduce"><ul><li>Bring an eco bag when shopping.</li><li>Say no to extra straw or package waste.</li></ul></div><div class="rCard"><h2>Reuse</h2><img class="lessonImg" src="3Rs.png" onerror="this.src='3Rs.jpg';this.onerror=null" alt="Reuse"><ul><li>Reuse a basket for classroom materials.</li><li>Use washable spoon and chopsticks again.</li></ul></div><div class="rCard"><h2>Recycle</h2><img class="lessonImg" src="3Rs.png" onerror="this.src='3Rs.jpg';this.onerror=null" alt="Recycle"><ul><li>Recycle paper and newspaper.</li><li>Sort plastic and metal correctly.</li></ul></div></div><h1 class="title" style="font-size:34px;margin-top:20px">How Countries Help</h1><div class="countryGrid" id="countryGrid"></div></div></section>
+<section class="slide"><div class="card"><h1 class="title">5. 2n1 Activity</h1><div class="instructionBox"><b>How to play:</b> 2 students as 1 player. The target word will float and change every 5 seconds. Race to find and highlight the word in the puzzle. Whoever highlights it first earns 1 point. The line divides Player 1 and Player 2.</div><div class="gameControls"><label><b>Seconds:</b> <input type="number" id="huntSeconds" value="60" min="20" max="300" step="10"></label><button onclick="startHuntGame()">Start</button><button onclick="stopHuntGame()">Stop</button><button onclick="newPlayerGame()">New Player</button><button onclick="resetHuntScores()">Reset Scores</button><button onclick="buildWordSearchGame()">New Puzzle</button></div><div style="text-align:center"><span class="timerBubble" id="huntTimer">1:00</span></div><div class="huntBattle"><div class="battleSide"><h2>Player 1</h2><span class="scoreBubble" id="huntP1Score">0</span><div class="floatingTargetBox" id="p1FloatingTarget"></div><div class="foundCount" id="p1FoundCount">Found: 0</div><div class="passedWords" id="p1PassedWords"></div><div class="wordSearchGrid" id="p1HuntGrid"></div></div><div class="divider"></div><div class="battleSide"><h2>Player 2</h2><span class="scoreBubble" id="huntP2Score">0</span><div class="floatingTargetBox" id="p2FloatingTarget"></div><div class="foundCount" id="p2FoundCount">Found: 0</div><div class="passedWords" id="p2PassedWords"></div><div class="wordSearchGrid" id="p2HuntGrid"></div></div></div>
+<div style="text-align:center;margin-top:18px;padding:14px;border-top:4px dashed #16a34a">
+  <h2 style="font-size:34px;color:#065f46;margin:0 0 8px">If We Won`t Act Now, There Will Be More Plastic In The Ocean</h2>
+  <p style="font-size:22px;font-weight:900;color:#b45309;margin:0">Prepared by: Teacher Jessy</p>
+</div>
+</div></section>
+<section class="slide"><div class="card"><div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap"><h1 class="title" style="margin:0">6. Review Battle</h1><img src="qrcode.png" alt="Review QR Code" style="width:95px;height:95px;object-fit:contain;border:3px solid #dbefff;border-radius:16px;background:white;padding:5px"></div><div class="instructionBox"><b>Instructions:</b><br>1. Put your hands on your shoulders.<br>2. The teacher will read the question.<br>3. Press the bell only after your teacher says, <b>"GO!"</b></div><div class="quizArea"><div class="quizQ" id="quizQ">Click Start Review.</div><div class="quizOptions" id="quizOptions"></div><div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap"><button class="bigBtn" onclick="startReview()">Start Review</button><button class="bigBtn" onclick="nextReview()">Next Question</button><div class="dieBox"><div class="die" id="dieFace">⚀</div><button class="bigBtn" onclick="rollDieForReview()">🎲 Roll</button></div></div><div class="feedback" id="feedback"></div><div class="subtitle" id="pokeInstruction">Click balloons below</div><div class="balloonBoards"><div class="balloonBoard"><h2>Player 1 Balloons <span class="scoreNumber" id="p1ReviewScore">0</span><span class="scoreBtns"><button onclick="changeReviewScore('p1',1)">+</button><button onclick="changeReviewScore('p1',-1)">−</button></span></h2><div class="balloonScore" id="p1BalloonScore">Popped: 0 / 35</div><div class="balloonGrid" id="p1Balloons"></div></div><div class="balloonBoard"><h2>Player 2 Balloons <span class="scoreNumber" id="p2ReviewScore">0</span><span class="scoreBtns"><button onclick="changeReviewScore('p2',1)">+</button><button onclick="changeReviewScore('p2',-1)">−</button></span></h2><div class="balloonScore" id="p2BalloonScore">Popped: 0 / 35</div><div class="balloonGrid" id="p2Balloons"></div></div></div></div></div></section>
+<section class="slide"><div class="wordwallBox"><h1>7. Wordwall Link</h1><p>Paste your Wordwall link here, then click open. The link will open in a new tab so you can play it on the smartboard.</p><input class="linkInput" id="wordwallInput" value="https://wordwall.net/" placeholder="Paste Wordwall link here"><button class="bigBtn" onclick="openWordwall()">Open Wordwall in New Tab</button><p style="font-size:20px;color:#47604f">Teacher tip: You can use this for extra vocabulary review after the word hunt.</p></div></section>
+</main></div>
+<script>
+'use strict';
+const vocab=[{zh:'吸管',en:'straw'},{zh:'塑膠',en:'plastic'},{zh:'金屬',en:'metal'},{zh:'湯匙',en:'spoon'},{zh:'環保袋',en:'eco bag'},{zh:'樓梯',en:'stairs'},{zh:'紙',en:'paper'},{zh:'筷子',en:'chopsticks'},{zh:'回收',en:'recycle'},{zh:'再利用',en:'reuse'},{zh:'水母',en:'jellyfish'},{zh:'包裝',en:'package'},{zh:'奇怪的',en:'strange'},{zh:'報紙',en:'newspaper'},{zh:'籃子',en:'basket'},{zh:'方便的',en:'convenient'},{zh:'危險的',en:'dangerous'},{zh:'垃圾',en:'trash'}];
+const letters='abcdefghijklmnopqrstuvwxyz'.split('');
+const allSdgs=['No Poverty','Zero Hunger','Good Health and Well-being','Quality Education','Gender Equality','Clean Water and Sanitation','Affordable and Clean Energy','Decent Work and Economic Growth','Industry, Innovation and Infrastructure','Reduced Inequalities','Sustainable Cities and Communities','Responsible Consumption and Production','Climate Action','Life Below Water','Life on Land','Peace, Justice and Strong Institutions','Partnerships for the Goals'];
+const sdgColors=['#e5243b','#dda63a','#4c9f38','#c5192d','#ff3a21','#26bde2','#fcc30b','#a21942','#fd6925','#dd1367','#fd9d24','#bf8b2e','#3f7e44','#0a97d9','#56c02b','#00689d','#19486a'];
+const sdgFocus=[];
+const countries=[{name:'South Korea',img:'sokor',article:'South Korea uses smart recycling systems to turn discarded Styrofoam into new products. Food waste must also be thrown away in biodegradable bags, so useful resources can be made from waste that would usually go to a landfill.'},{name:'Germany',img:'germany',article:'Germany has a bottle return system. When people return bottles or containers to special machines, they can earn money back. This helps people recycle more and throw away less trash.'},{name:'Rwanda',img:'rwanda',article:'Rwanda helps the environment by focusing on e-waste. Old phones, computers, batteries, and other electronic waste can be collected and processed safely, so harmful materials do not pollute the land and water.'},{name:'Taiwan',img:'taiwan',article:'Taiwan helps by separating trash and recycling. Many schools teach students to use reusable bottles, eco bags, and recycling baskets.'}];
+const reviewQuestions=[
+{q:'Which word means 吸管?',options:['straw','spoon','stairs','basket'],answer:'straw'},
+{q:'Which word means 塑膠?',options:['plastic','paper','metal','newspaper'],answer:'plastic'},
+{q:'Which word means 金屬?',options:['metal','jellyfish','package','eco bag'],answer:'metal'},
+{q:'Which word means 湯匙?',options:['spoon','chopsticks','straw','trash'],answer:'spoon'},
+{q:'Which word means 環保袋?',options:['eco bag','basket','package','paper'],answer:'eco bag'},
+{q:'Which word means 樓梯?',options:['stairs','straw','spoon','metal'],answer:'stairs'},
+{q:'Which word means 紙?',options:['paper','plastic','metal','trash'],answer:'paper'},
+{q:'Which word means 筷子?',options:['chopsticks','spoon','straw','basket'],answer:'chopsticks'},
+{q:'Which word means 回收?',options:['recycle','reuse','reduce','throw'],answer:'recycle'},
+{q:'Which word means 再利用?',options:['reuse','recycle','trash','dangerous'],answer:'reuse'},
+{q:'Which word means 水母?',options:['jellyfish','fish','package','basket'],answer:'jellyfish'},
+{q:'Which word means 包裝?',options:['package','newspaper','eco bag','stairs'],answer:'package'},
+{q:'Which word means 奇怪的?',options:['strange','dangerous','convenient','clean'],answer:'strange'},
+{q:'Which word means 報紙?',options:['newspaper','paper','package','plastic'],answer:'newspaper'},
+{q:'Which word means 籃子?',options:['basket','eco bag','trash','spoon'],answer:'basket'},
+{q:'Which word means 方便的?',options:['convenient','dangerous','strange','metal'],answer:'convenient'},
+{q:'Which word means 危險的?',options:['dangerous','convenient','strange','paper'],answer:'dangerous'},
+{q:'Which word means 垃圾?',options:['trash','recycle','reuse','basket'],answer:'trash'},
+{q:'Which SDG is about clean energy?',options:['SDG 7','SDG 11','SDG 13','SDG 14'],answer:'SDG 7'},
+{q:'Which SDG is about sustainable cities?',options:['SDG 11','SDG 7','SDG 12','SDG 14'],answer:'SDG 11'},
+{q:'Which SDG is about responsible consumption?',options:['SDG 12','SDG 13','SDG 14','SDG 7'],answer:'SDG 12'},
+{q:'Which SDG is about climate action?',options:['SDG 13','SDG 11','SDG 12','SDG 7'],answer:'SDG 13'},
+{q:'Which SDG is about life below water?',options:['SDG 14','SDG 7','SDG 11','SDG 12'],answer:'SDG 14'},
+{q:'Which 3R means use less?',options:['Reduce','Reuse','Recycle','Repeat'],answer:'Reduce'},
+{q:'Which 3R means use again?',options:['Reuse','Reduce','Recycle','Repair'],answer:'Reuse'},
+{q:'Which 3R means sort things like paper, metal, and plastic?',options:['Recycle','Reuse','Reduce','Refuse'],answer:'Recycle'},
+{q:'Which item is better for shopping?',options:['eco bag','plastic bag','trash','straw'],answer:'eco bag'},
+{q:'What can look like food to sea animals?',options:['plastic bag','stairs','newspaper','metal spoon'],answer:'plastic bag'},
+{q:'Where should we put trash?',options:['basket','ocean','stairs','street'],answer:'basket'},
+{q:'Which action helps protect oceans?',options:['reuse and recycle','throw trash in water','use more plastic','leave packages outside'],answer:'reuse and recycle'}];
+let zoomLevel=1,reviewIndex=-1,pendingPokes=0,p1ReviewScore=0,p2ReviewScore=0,currentReviewQuestions=[],canvas=null,ctx=null,markerColor='#ff0000',touchClone=null,touchSource=null,huntTimer=null,huntTime=60,huntScores={p1:0,p2:0};
+const activePointers=new Map();
+function showSlide(index){document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===index));document.querySelectorAll('.navBtn').forEach((b,i)=>b.classList.toggle('active',i===index));resetZoom();resizeCanvas()}
+function zoomIn(){zoomLevel=Math.min(1.6,zoomLevel+.1);applyZoom()}function zoomOut(){zoomLevel=Math.max(.7,zoomLevel-.1);applyZoom()}function resetZoom(){zoomLevel=1;applyZoom()}function applyZoom(){const slide=document.querySelector('.slide.active');if(slide){slide.style.transform='scale('+zoomLevel+')';slide.style.width=(100/zoomLevel)+'%'}}
+function shuffle(arr){const copy=arr.slice();for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
+function playBeep(freq,duration){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=freq||440;o.type='sine';o.connect(g);g.connect(a.destination);g.gain.value=.08;o.start();o.stop(a.currentTime+(duration||.1))}catch(e){}}
+function playBuzz(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=130;o.type='sawtooth';o.connect(g);g.connect(a.destination);g.gain.value=.09;o.start();o.stop(a.currentTime+.25)}catch(e){}}
+function showBigFeedback(symbol,color){const div=document.createElement('div');div.className='feedbackOverlay';div.textContent=symbol;div.style.color=color;document.body.appendChild(div);setTimeout(()=>div.remove(),800)}
+function speakChinese(text){try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='zh-TW';u.rate=.85;window.speechSynthesis.speak(u)}catch(e){playBeep(720,.12)}}
+function makeChineseClickable(text){return String(text).replace(/[一-鿿]+/g,m=>'<span style="background:#fef3c7;border-radius:8px;padding:2px 6px;cursor:pointer" onclick="event.stopPropagation();speakChinese(\''+m+'\')">'+m+'</span>')}
+function buildVocabulary(){const zh=document.getElementById('zhWords'),en=document.getElementById('enWords');zh.innerHTML='';en.innerHTML='';shuffle(vocab).forEach((item,index)=>{const z=document.createElement('div');z.className='dragItem';z.draggable=true;z.dataset.en=item.en;z.textContent=letters[index]+'. '+item.zh;z.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.en));z.addEventListener('pointerdown',touchDragStart);zh.appendChild(z)});shuffle(vocab).forEach(item=>{const dz=document.createElement('div');dz.className='dropZone';dz.dataset.en=item.en;dz.innerHTML='<div>'+item.en+'</div><div class="answerSpot"></div>';dz.addEventListener('dragover',e=>e.preventDefault());dz.addEventListener('drop',e=>{e.preventDefault();checkDrop(dz,e.dataTransfer.getData('text/plain'))});en.appendChild(dz)})}
+function revealChineseWords(){document.getElementById('zhWords').classList.remove('hidden');playBeep(760,.08)}function resetVocabulary(){buildVocabulary();document.getElementById('zhWords').classList.add('hidden')}
+function touchDragStart(e){if(e.pointerType==='mouse')return;touchSource=e.currentTarget;touchClone=touchSource.cloneNode(true);touchClone.style.position='fixed';touchClone.style.zIndex='1000';touchClone.style.pointerEvents='none';touchClone.style.width=touchSource.offsetWidth+'px';document.body.appendChild(touchClone);moveTouchClone(e.clientX,e.clientY);touchSource.setPointerCapture(e.pointerId);touchSource.addEventListener('pointermove',touchDragMove);touchSource.addEventListener('pointerup',touchDragEnd,{once:true})}
+function moveTouchClone(x,y){if(touchClone){touchClone.style.left=(x-90)+'px';touchClone.style.top=(y-45)+'px'}}function touchDragMove(e){moveTouchClone(e.clientX,e.clientY)}function touchDragEnd(e){const target=document.elementFromPoint(e.clientX,e.clientY),zone=target?target.closest('.dropZone'):null;if(zone&&touchSource)checkDrop(zone,touchSource.dataset.en);if(touchClone)touchClone.remove();touchClone=null;touchSource=null}
+function checkDrop(zone,answer){const spot=zone.querySelector('.answerSpot');if(zone.dataset.en===answer){zone.classList.add('correct');spot.textContent='✓';const drag=[...document.querySelectorAll('.dragItem')].find(d=>d.dataset.en===answer);if(drag)drag.style.visibility='hidden';showBigFeedback('✓','var(--green)');playBeep(820,.15)}else{zone.classList.add('wrong');spot.textContent='✗';showBigFeedback('✗','var(--red)');playBuzz();setTimeout(()=>{zone.classList.remove('wrong');spot.textContent=''},900)}}
+function cycleSdgImage(img){
+  const list = (img.dataset.fallbacks || '').split('|').filter(Boolean);
+  let i = Number(img.dataset.index || '0') + 1;
+  if(i < list.length){
+    img.dataset.index = String(i);
+    img.src = list[i];
+  }else{
+    img.style.display = 'none';
+  }
+}
+function makeSdgImages(item){
+  const letters = ['a','b','c'];
+  return letters.map(letter=>{
+    const files = [
+      'sdg'+item.n+letter+'.png',
+      'sdg'+item.n+letter+'.jpg',
+      'sd'+item.n+letter+'.png',
+      'sd'+item.n+letter+'.jpg'
+    ];
+    return '<img src="'+files[0]+'" data-index="0" data-fallbacks="'+files.join('|')+'" onerror="cycleSdgImage(this)" alt="SDG '+item.n+' image '+letter.toUpperCase()+'">';
+  }).join('');
+}
+function buildLessonContent(){
+  const all=document.getElementById('allSdgGrid');
+  all.innerHTML='';
+  allSdgs.forEach((name,i)=>{
+    const div=document.createElement('div');
+    div.className='miniSdg';
+    div.style.background=sdgColors[i];
+    div.textContent=(i+1)+'. '+name;
+    all.appendChild(div);
+  });
+  const grid=document.getElementById('countryGrid');
+  grid.innerHTML='';
+  countries.forEach(c=>{
+    const card=document.createElement('div');
+    card.className='countryCard';
+    card.onclick=()=>{
+      document.querySelectorAll('.countryCard').forEach(country=>{
+        if(country!==card)country.classList.remove('open');
+      });
+      card.classList.toggle('open');
+    };
+    card.innerHTML='<h2>'+c.name+'</h2><div class="countryArticle"><img class="lessonImg" src="'+c.img+'.png" onerror="this.src=\''+c.img+'.jpg\';this.onerror=null" alt="'+c.name+'"><p>'+c.article+'</p></div>';
+    grid.appendChild(card);
+  });
+}
+function startReview(){reviewIndex=-1;pendingPokes=0;p1ReviewScore=0;p2ReviewScore=0;currentReviewQuestions=shuffle(reviewQuestions);updateReviewScores();buildBalloons();document.getElementById('dieFace').textContent='⚀';document.getElementById('pokeInstruction').textContent='Click balloons below';nextReview()}
+function nextReview(){if(!currentReviewQuestions.length)currentReviewQuestions=shuffle(reviewQuestions);reviewIndex=(reviewIndex+1)%currentReviewQuestions.length;pendingPokes=0;const item=currentReviewQuestions[reviewIndex];document.getElementById('quizQ').innerHTML='Question '+(reviewIndex+1)+': '+makeChineseClickable(item.q);document.getElementById('feedback').textContent='';document.getElementById('pokeInstruction').textContent='Roll the die after a correct answer.';const options=document.getElementById('quizOptions');options.innerHTML='';shuffle(item.options).forEach(opt=>{const btn=document.createElement('button');btn.textContent=opt;btn.onclick=()=>checkReview(opt);options.appendChild(btn)})}
+function checkReview(choice){const item=currentReviewQuestions[reviewIndex]||reviewQuestions[reviewIndex];const fb=document.getElementById('feedback');if(choice===item.answer){fb.textContent='✓ Correct! Add 1 point to the player, then roll the die.';fb.style.color='var(--green)';playBeep(760,.1)}else{fb.textContent='✗ Try again!';fb.style.color='var(--red)';playBuzz()}}
+function changeReviewScore(pid,amount){if(pid==='p1')p1ReviewScore=Math.max(0,p1ReviewScore+amount);else p2ReviewScore=Math.max(0,p2ReviewScore+amount);updateReviewScores();playBeep(700,.06)}function updateReviewScores(){document.getElementById('p1ReviewScore').textContent=p1ReviewScore;document.getElementById('p2ReviewScore').textContent=p2ReviewScore}
+function buildBalloons(){['p1','p2'].forEach(pid=>{const grid=document.getElementById(pid+'Balloons');grid.innerHTML='';const colors=['🔴','🟠','🟡','🟢','🔵','🟣','🩷'];for(let i=0;i<35;i++){const b=document.createElement('button');b.className='balloon';b.textContent=colors[i%colors.length];b.onclick=()=>pokeOneBalloon(pid,b);grid.appendChild(b)}updateBalloonScore(pid)})}
+function pokeOneBalloon(pid,button){if(button.classList.contains('popped'))return;if(pendingPokes>0)pendingPokes--;button.classList.add('popped');updateBalloonScore(pid);playBeep(640,.06);document.getElementById('pokeInstruction').textContent=pendingPokes>0?'Remaining pokes from die: '+pendingPokes:'Done! Click Next Question.'}
+function rollDieForReview(){const die=document.getElementById('dieFace'),faces=['⚀','⚁','⚂','⚃','⚄','⚅'];let rolls=0;die.classList.add('dieRolling');document.getElementById('pokeInstruction').textContent='Rolling...';const roller=setInterval(()=>{const temp=Math.floor(Math.random()*6);die.textContent=faces[temp];playBeep(520+rolls*25,.035);rolls++;if(rolls>=18){clearInterval(roller);const roll=Math.floor(Math.random()*6)+1;die.textContent=faces[roll-1];die.classList.remove('dieRolling');pendingPokes=roll;document.getElementById('pokeInstruction').textContent='Poke '+roll+' balloon(s).';playBeep(950,.18);showBigFeedback(String(roll),'var(--green)')}},70)}
+function updateBalloonScore(pid){const total=document.querySelectorAll('#'+pid+'Balloons .balloon').length;const popped=document.querySelectorAll('#'+pid+'Balloons .balloon.popped').length;document.getElementById(pid+'BalloonScore').textContent='Popped: '+popped+' / '+total}
+const wordSearchWords=['STRAW','PLASTIC','METAL','SPOON','PAPER','RECYCLE','REUSE','TRASH','BASKET','PACKAGE','JELLYFISH','NEWSPAPER'];
+const puzzleSize=12;
+let wordSearchState={p1:{grid:[],found:[],selected:[],target:''},p2:{grid:[],found:[],selected:[],target:''}};
+let floatingWordTimer=null;
+function cleanWord(word){return word.replace(/\s+/g,'').toUpperCase()}
+function makeEmptyGrid(){return Array.from({length:puzzleSize},()=>Array.from({length:puzzleSize},()=>''))}
+function canPlace(grid,word,row,col,dr,dc){for(let i=0;i<word.length;i++){const r=row+dr*i,c=col+dc*i;if(r<0||c<0||r>=puzzleSize||c>=puzzleSize)return false;if(grid[r][c]&&grid[r][c]!==word[i])return false}return true}
+function placeWord(grid,word){const dirs=[[0,1],[1,0],[1,1],[-1,1]];for(let tries=0;tries<150;tries++){const dir=dirs[Math.floor(Math.random()*dirs.length)],row=Math.floor(Math.random()*puzzleSize),col=Math.floor(Math.random()*puzzleSize);if(canPlace(grid,word,row,col,dir[0],dir[1])){for(let i=0;i<word.length;i++)grid[row+dir[0]*i][col+dir[1]*i]=word[i];return true}}return false}
+function makePuzzle(){const grid=makeEmptyGrid();wordSearchWords.forEach(w=>placeWord(grid,cleanWord(w)));const abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<puzzleSize;r++){for(let c=0;c<puzzleSize;c++){if(!grid[r][c])grid[r][c]=abc[Math.floor(Math.random()*abc.length)]}}return grid}
+function buildWordSearchGame(showTargets){['p1','p2'].forEach(pid=>{wordSearchState[pid]={grid:makePuzzle(),found:[],selected:[],target:''};const stack=document.getElementById(pid+'PassedWords');if(stack)stack.innerHTML='';const box=document.getElementById(pid+'FloatingTarget');if(box)box.innerHTML='';updateFoundCount(pid);renderPuzzle(pid);if(showTargets)setFloatingTarget(pid)})}
+function addPassedWord(pid,word){
+  if(!word)return;
+  const stack=document.getElementById(pid+'PassedWords');
+  if(!stack)return;
+  if([...stack.children].some(chip=>chip.textContent===word))return;
+  const chip=document.createElement('button');
+  chip.className='passedChip';
+  chip.id=pid+'Passed'+cleanWord(word);
+  chip.textContent=word;
+  chip.onclick=()=>tapFoundWord(pid,word);
+  stack.prepend(chip);
+}
+function tapFoundWord(pid,word){const target=cleanWord(word);if(wordSearchState[pid].found.includes(target))return;wordSearchState[pid].found.push(target);markFoundWord(pid,word);huntScores[pid]++;updateFoundCount(pid);updateHuntScores();showBigFeedback('+1','var(--green)');playBeep(980,.18);setTimeout(()=>setFloatingTarget(pid),400)}
+function markFoundWord(pid,word){const chip=document.getElementById(pid+'Passed'+cleanWord(word));if(chip)chip.classList.add('foundWord')}
+function updateFoundCount(pid){const count=document.getElementById(pid+'FoundCount');if(count)count.textContent='Found: '+wordSearchState[pid].found.length}
+function setFloatingTarget(pid){
+  const available=wordSearchWords.filter(w=>!wordSearchState[pid].found.includes(cleanWord(w)));
+  const target=available.length?available[Math.floor(Math.random()*available.length)]:wordSearchWords[Math.floor(Math.random()*wordSearchWords.length)];
+  wordSearchState[pid].target=cleanWord(target);
+  const box=document.getElementById(pid+'FloatingTarget');
+  if(box){
+    box.innerHTML='<div class="floatingWord">'+target+'</div>';
+    setTimeout(()=>{
+      if(!wordSearchState[pid].found.includes(cleanWord(target))){
+        addPassedWord(pid,target);
+      }
+    },5000);
+  }
+}
+function startFloatingTargets(afterCountdown){
+  stopFloatingTargets();
+  document.getElementById('p1PassedWords').innerHTML='';
+  document.getElementById('p2PassedWords').innerHTML='';
+  ['p1','p2'].forEach(pid=>{const box=document.getElementById(pid+'FloatingTarget');if(box)box.innerHTML='<div class="countdownText">First word in 5...</div>'});
+  let count=5;
+  const countdown=setInterval(()=>{
+    count--;
+    ['p1','p2'].forEach(pid=>{const box=document.getElementById(pid+'FloatingTarget');if(box&&count>0)box.innerHTML='<div class="countdownText">First word in '+count+'...</div>'});
+    if(count<=0){
+      clearInterval(countdown);
+      setFloatingTarget('p1');
+      setFloatingTarget('p2');
+      floatingWordTimer=setInterval(()=>{setFloatingTarget('p1');setFloatingTarget('p2')},5000);
+      if(typeof afterCountdown==='function')afterCountdown();
+    }
+  },1000);
+  floatingWordTimer=countdown;
+}
+function stopFloatingTargets(){if(floatingWordTimer)clearInterval(floatingWordTimer);floatingWordTimer=null}
+function renderPuzzle(pid){const gridEl=document.getElementById(pid+'HuntGrid');gridEl.innerHTML='';const grid=wordSearchState[pid].grid;for(let r=0;r<puzzleSize;r++){for(let c=0;c<puzzleSize;c++){const btn=document.createElement('button');btn.className='letterCell';btn.textContent=grid[r][c];btn.dataset.row=r;btn.dataset.col=c;btn.onclick=()=>selectLetter(pid,btn);gridEl.appendChild(btn)}}}
+function selectLetter(pid,btn){if(btn.classList.contains('found'))return;btn.classList.toggle('selected');const key=btn.dataset.row+','+btn.dataset.col;if(btn.classList.contains('selected'))wordSearchState[pid].selected.push(key);else wordSearchState[pid].selected=wordSearchState[pid].selected.filter(k=>k!==key);checkSelectedWord(pid)}
+function checkSelectedWord(pid){const keys=wordSearchState[pid].selected;if(!keys.length)return;let word='';keys.forEach(key=>{const parts=key.split(','),r=Number(parts[0]),c=Number(parts[1]);word+=wordSearchState[pid].grid[r][c]});const reversed=word.split('').reverse().join('');const target=wordSearchState[pid].target;const isMatch=(word===target||reversed===target);if(isMatch&&!wordSearchState[pid].found.includes(target)){wordSearchState[pid].found.push(target);addPassedWord(pid,target);markFoundWord(pid,target);huntScores[pid]++;updateFoundCount(pid);updateHuntScores();keys.forEach(key=>{const parts=key.split(','),cell=document.querySelector('#'+pid+'HuntGrid .letterCell[data-row="'+parts[0]+'"][data-col="'+parts[1]+'"]');if(cell){cell.classList.remove('selected');cell.classList.add('found')}});wordSearchState[pid].selected=[];showBigFeedback('+1','var(--green)');playBeep(900,.18);setTimeout(()=>setFloatingTarget(pid),600)}else if(keys.length>12){clearPuzzleSelection(pid)}}
+function clearPuzzleSelection(pid){document.querySelectorAll('#'+pid+'HuntGrid .letterCell.selected').forEach(cell=>cell.classList.remove('selected'));wordSearchState[pid].selected=[]}
+function startHuntGame(){stopHuntGame();huntTime=parseInt(document.getElementById('huntSeconds').value||'60',10);updateHuntTimer();buildWordSearchGame(false);startFloatingTargets(()=>{huntTimer=setInterval(()=>{huntTime--;updateHuntTimer();if(huntTime<=0){stopHuntGame();showBigFeedback('TIME!','var(--orange)');playBuzz()}},1000)})}
+function stopHuntGame(){if(huntTimer)clearInterval(huntTimer);huntTimer=null;stopFloatingTargets()}
+function updateHuntTimer(){document.getElementById('huntTimer').textContent=Math.floor(huntTime/60)+':'+String(huntTime%60).padStart(2,'0')}
+function updateHuntScores(){document.getElementById('huntP1Score').textContent=huntScores.p1;document.getElementById('huntP2Score').textContent=huntScores.p2}
+function resetHuntScores(){huntScores={p1:0,p2:0};updateHuntScores();buildWordSearchGame(false);stopFloatingTargets();huntTime=60;document.getElementById('huntSeconds').value=60;updateHuntTimer()}
+function newPlayerGame(){stopHuntGame();huntScores={p1:0,p2:0};updateHuntScores();huntTime=60;document.getElementById('huntSeconds').value=60;updateHuntTimer();buildWordSearchGame(false);showBigFeedback('NEW','var(--green)')}
+function toggleThreeRs(){const box=document.getElementById('threeRBox');if(box)box.classList.toggle('hidden')}
+function openWarmupVideo(){window.open('https://www.youtube.com/watch?v=571sT5s_5go','_blank')}
+function toggleWarmupQuestions(){const box=document.getElementById('warmupQuestions');if(box)box.classList.toggle('hidden')}
+function openWordwall(){let url=document.getElementById('wordwallInput').value.trim();if(!url)url='https://wordwall.net/';if(!/^https?:\/\//i.test(url))url='https://'+url;window.open(url,'_blank')}
+function initMarkerCanvas(){canvas=document.getElementById('drawCanvas');ctx=canvas.getContext('2d');resizeCanvas();canvas.addEventListener('pointerdown',e=>{if(!document.body.classList.contains('markerOn'))return;e.preventDefault();canvas.setPointerCapture(e.pointerId);activePointers.set(e.pointerId,getCanvasPos(e))});canvas.addEventListener('pointermove',e=>{if(!document.body.classList.contains('markerOn')||!activePointers.has(e.pointerId)||!ctx)return;e.preventDefault();const old=activePointers.get(e.pointerId),pos=getCanvasPos(e);ctx.strokeStyle=markerColor;ctx.lineWidth=parseInt(document.getElementById('markerSize').value,10);ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(old.x,old.y);ctx.lineTo(pos.x,pos.y);ctx.stroke();activePointers.set(e.pointerId,pos)});canvas.addEventListener('pointerup',e=>activePointers.delete(e.pointerId));canvas.addEventListener('pointercancel',e=>activePointers.delete(e.pointerId))}
+function toggleMarker(){document.body.classList.toggle('markerOn')}function setMarkerColor(color){markerColor=color}function clearMarker(){if(ctx&&canvas)ctx.clearRect(0,0,canvas.width,canvas.height)}
+function resizeCanvas(){if(!canvas)return;const rect=document.getElementById('content').getBoundingClientRect();canvas.width=rect.width*window.devicePixelRatio;canvas.height=rect.height*window.devicePixelRatio;canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';if(ctx)ctx.setTransform(window.devicePixelRatio,0,0,window.devicePixelRatio,0,0)}function getCanvasPos(e){const rect=canvas.getBoundingClientRect();return{x:e.clientX-rect.left,y:e.clientY-rect.top}}
+window.addEventListener('resize',resizeCanvas);document.addEventListener('DOMContentLoaded',()=>{buildVocabulary();buildBalloons();buildLessonContent();buildWordSearchGame(false);initMarkerCanvas();});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.dropZone').forEach(el=>{
+    const t=(el.textContent||'').trim().toLowerCase();
+    if(['newspaper','chopsticks','convenient','dangerous'].includes(t)){
+      el.classList.add('longWordAdjust');
+    }
+  });
+});
+</script></body>
+</html>
